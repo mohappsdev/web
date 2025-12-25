@@ -3,11 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- CONFIGURATION ---
     // Add your screenshot filenames here. The path is relative to the HTML file.
     const screenshots = [
-        'images/Scr1.png',
-        'images/Scr2.png',
-        'images/Scr3.png',
-        'images/Scr4.png',
-        'images/Scr5.png'
+        'images/scr1.png',
+        'images/scr2.png',
+        'images/scr3.png',
+        'images/scr4.png',
+        'images/scr5.png'
     ];
 
     // --- DOM ELEMENTS ---
@@ -111,4 +111,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- START THE CAROUSEL ---
     initCarousel();
+
 });
