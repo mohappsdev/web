@@ -1,0 +1,237 @@
+/* --- Basic Setup & Variables --- */
+:root {
+    --primary-color: #333;
+    --background-color: #f4f7f6;
+    --card-background: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+    --font-family: 'Roboto', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* --- Main Container --- */
+.landing-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex; /* Mobile-first: Flexbox */
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* --- Carousel Section --- */
+.carousel-section {
+    position: relative;
+    width: 100%;
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: 0 8px 16px var(--shadow-color);
+    overflow: hidden;
+}
+
+.carousel-container {
+    position: relative;
+    /* Mobile-first aspect ratio: 9:16 (16 / 9 = 1.777...) */
+    padding-top: 177.78%; 
+}
+
+.carousel-slides {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.carousel-slides::-webkit-scrollbar {
+    display: none;
+}
+
+/* --- KEY FIX #1: Show the full image without cropping --- */
+.carousel-slides img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Use 'contain' to see the full 9:16 image */
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    background-color: #f8f8f8; /* Add a background for the empty space */
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    padding: 16px;
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 0 5px 5px 0;
+    transition: background-color 0.3s, opacity 0.3s;
+    opacity: 0;
+    z-index: 10;
+}
+
+.carousel-section:hover .carousel-btn {
+    opacity: 1;
+}
+
+.carousel-btn:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.prev-btn {
+    left: 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.next-btn {
+    right: 0;
+    border-radius: 5px 0 0 5px;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s, width 0.3s;
+}
+
+.indicator.active {
+    background-color: white;
+    width: 28px;
+    border-radius: 6px;
+}
+
+/* --- Store Section --- */
+.store-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.store-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--card-background);
+    padding: 20px 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.store-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+.store-button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.button-text {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.store-name {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* Store Button Specific Styles */
+.google-play { color: #000; }
+.app-store { color: #3FB632; }
+.galaxy-store { color: #0091EA; }
+
+.qr-code img {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+
+/* --- Responsive Design for Desktop --- */
+@media (min-width: 992px) {
+    .landing-container {
+        display: grid; /* Use Grid for desktop layout */
+        grid-template-columns: auto 1fr; /* Left column is auto-sized by its content */
+        height: 85vh;
+        max-height: 800px;
+        gap: 40px;
+        align-items: stretch; /* Make both columns stretch to the full grid height */
+    }
+
+    /* --- KEY FIX #2: Let the carousel's height define its width --- */
+    .carousel-section {
+        /* Remove max-width. Let the aspect-ratio property control the size. */
+        height: 100%; /* Make the carousel fill the grid cell's height */
+        aspect-ratio: 9 / 16; /* This will calculate the WIDTH from the height */
+        justify-self: end; /* Align to the right of its grid cell for better spacing */
+    }
+
+    /* This override is still needed to cancel the mobile padding-top trick */
+    .carousel-container {
+        padding-top: 0;
+        height: 100%; /* Now this correctly fills the carousel's height */
+    }
+
+    /* The store section now has a definitive height to match the carousel */
+    .store-section {
+        justify-content: space-between; /* Distribute the three cards vertically */
+        height: 100%; /* Ensure it fills the grid cell's height */
+    }
+
+    .store-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 30px;
+    }
+
+    .store-button {
+        margin-bottom: 20px;
+    }
+
+    .qr-code img {
+        width: 120px;
+        height: 120px;
+    }
+}
