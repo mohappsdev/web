@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- CONFIGURATION ---
-    // Add your screenshot filenames here. The path is relative to the HTML file.
     const screenshots = [
         'images/scr1.jpg',
         'images/scr2.jpg',
@@ -20,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentIndex = 0;
     let startX = 0;
     let isDragging = false;
+    let scrollLeft = 0;
 
     // --- INITIALIZATION ---
     function initCarousel() {
@@ -27,13 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create slides and indicators
         screenshots.forEach((src, index) => {
-            // Create slide image
             const img = document.createElement('img');
             img.src = src;
             img.alt = `App Screenshot ${index + 1}`;
             slidesContainer.appendChild(img);
 
-            // Create indicator dot
             const indicator = document.createElement('div');
             indicator.classList.add('indicator');
             if (index === 0) indicator.classList.add('active');
@@ -45,18 +43,25 @@ document.addEventListener('DOMContentLoaded', () => {
         prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
         nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
         
-        // Touch events for swiping
-        slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
-        slidesContainer.addEventListener('touchmove', handleTouchMove, { passive: true });
-        slidesContainer.addEventListener('touchend', handleTouchEnd);
+        // --- IMPROVED SWIPE HANDLING ---
+        slidesContainer.addEventListener('mousedown', handleDragStart);
+        slidesContainer.addEventListener('touchstart', handleDragStart, { passive: true });
+        slidesContainer.addEventListener('mousemove', handleDragMove);
+        slidesContainer.addEventListener('touchmove', handleDragMove, { passive: false });
+        slidesContainer.addEventListener('mouseup', handleDragEnd);
+        slidesContainer.addEventListener('touchend', handleDragEnd);
+        slidesContainer.addEventListener('mouseleave', handleDragEnd);
         
-        // Scroll event to update indicators
-        slidesContainer.addEventListener('scroll', updateIndicators);
+        // Use a timeout to debounce the scroll event listener
+        let scrollTimeout;
+        slidesContainer.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(updateIndicators, 50); // 50ms delay
+        });
     }
 
     // --- FUNCTIONS ---
     function goToSlide(index) {
-        // Clamp index to be within bounds
         if (index < 0) index = screenshots.length - 1;
         if (index >= screenshots.length) index = 0;
 
@@ -76,41 +81,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // --- TOUCH HANDLERS ---
-    function handleTouchStart(e) {
+    // --- DRAG/SWIPE HANDLERS ---
+    function handleDragStart(e) {
         isDragging = true;
-        startX = e.touches[0].clientX;
+        startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        scrollLeft = slidesContainer.scrollLeft;
         slidesContainer.style.cursor = 'grabbing';
     }
 
-    function handleTouchMove(e) {
+    function handleDragMove(e) {
         if (!isDragging) return;
-        // Prevent vertical scroll from happening while swiping horizontally
-        if (Math.abs(e.touches[0].clientX - startX) > 5) {
-            e.preventDefault();
-        }
+        e.preventDefault(); // Prevent vertical scroll
+        const x = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+        const walk = (x - startX) * 1.5; // Scroll speed
+        slidesContainer.scrollLeft = scrollLeft - walk;
     }
 
-    function handleTouchEnd(e) {
+    function handleDragEnd(e) {
         if (!isDragging) return;
         isDragging = false;
         slidesContainer.style.cursor = 'grab';
 
-        const endX = e.changedTouches[0].clientX;
-        const diffX = startX - endX;
+        // Determine the closest slide to snap to
+        const slideWidth = slidesContainer.clientWidth;
+        const endX = e.type.includes('mouse') ? e.pageX : e.changedTouches[0].pageX;
+        const diff = startX - endX;
 
-        // If swipe distance is significant, change slide
-        if (Math.abs(diffX) > 50) {
-            if (diffX > 0) {
-                goToSlide(currentIndex + 1); // Swiped left, go to next
+        if (Math.abs(diff) > slideWidth / 4) { // If swiped more than 25% of the slide width
+            if (diff > 0) {
+                goToSlide(currentIndex + 1); // Swiped left
             } else {
-                goToSlide(currentIndex - 1); // Swiped right, go to prev
+                goToSlide(currentIndex - 1); // Swiped right
             }
+        } else {
+            // Not a significant swipe, snap back to current slide
+            goToSlide(currentIndex);
         }
     }
 
     // --- START THE CAROUSEL ---
     initCarousel();
-
 });
-

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -15,7 +15,6 @@
         <!-- Left Section: Screenshot Carousel -->
         <section id="carousel-section" class="carousel-section">
             <div class="carousel-container">
-                <!-- Slides and Indicators will be dynamically added by JavaScript -->
                 <div class="carousel-slides" id="carousel-slides"></div>
                 <button class="carousel-btn prev-btn" id="prev-btn">&#10094;</button>
                 <button class="carousel-btn next-btn" id="next-btn">&#10095;</button>
@@ -23,34 +22,40 @@
             <div class="carousel-indicators" id="carousel-indicators"></div>
         </section>
 
-        <!-- Right Section: Store Buttons and QR Codes (Unchanged) -->
+        <!-- Right Section: Store Buttons and QR Codes -->
         <section id="store-section" class="store-section">
+            <!-- Google Play Card -->
             <a href="https://play.google.com/store/apps/details?id=mohapps.trxt" target="_blank" class="store-card">
                 <div class="store-button google-play">
-                    <span class="button-text">Get it on</span>
+                    <span class="button-text"> Get it on </span>
                     <span class="store-name">Google Play</span>
+                   <img src="icons/googleplay.png" alt="Google Play Icon" class="store-icon">
                 </div>
-                <div class="qr-code">
+                <div class="qr-code mobile-hidden">
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://play.google.com/store/apps/details?id=mohapps.trxt" alt="Google Play QR Code">
                 </div>
             </a>
 
+            <!-- Cafebazaar Card -->
             <a href="https://cafebazaar.ir/app/mohapps.trxt" target="_blank" class="store-card">
                 <div class="store-button app-store">
-                    <span class="button-text">دریافت از</span>
+                    <span class="button-text"> دریافت از </span>
                     <span class="store-name">بازار</span>
+                    <img src="icons/cafebazaar.png" alt="Cafebazaar Icon" class="store-icon">
                 </div>
-                <div class="qr-code">
+                <div class="qr-code mobile-hidden">
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://cafebazaar.ir/app/mohapps.trxt" alt="Cafebazaar QR Code">
                 </div>
             </a>
 
+            <!-- Myket Card -->
             <a href="https://myket.ir/app/mohapps.trxt" target="_blank" class="store-card">
                 <div class="store-button galaxy-store">
-                    <span class="button-text">دریافت از</span>
+                    <span class="button-text"> دریافت از </span>
                     <span class="store-name">مایکت</span>
+                    <img src="icons/myket.png" alt="Myket Icon" class="store-icon">
                 </div>
-                <div class="qr-code">
+                <div class="qr-code mobile-hidden">
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://myket.ir/app/mohapps.trxt" alt="Myket QR Code">
                 </div>
             </a>
@@ -59,6 +64,4 @@
 
     <script src="script.js"></script>
 </body>
-
 </html>
-
