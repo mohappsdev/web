@@ -30,16 +30,18 @@ body {
 .landing-container {
     width: 100%;
     max-width: 600px;
-    height: 100%; /* Fill the viewport height */
-    padding: 20px 10px;
-    box-sizing: border-box; /* Include padding in height calculation */
+    height: 100vh; /* Use full viewport height */
+    /* NEW: Add 4vh padding to top and bottom for margins */
+    padding: 4vh 10px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
 }
 
 /* --- Carousel Section --- */
 .carousel-section {
-    height: 80%;
+    /* NEW: Set a fixed height of 76% of the viewport */
+    height: 76vh;
     position: relative;
     background: var(--card-background);
     border-radius: var(--border-radius);
@@ -47,7 +49,6 @@ body {
     overflow: hidden;
     margin: 0 auto;
     aspect-ratio: 3 / 7;
-    max-width: 100%;
 }
 
 .carousel-container {
@@ -134,28 +135,26 @@ body {
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s, width 0.3s;
-    /* VISIBILITY FIX: Add a border to make it visible on light images */
-    border: 1px solid rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .indicator.active {
     background-color: white;
     width: 28px;
     border-radius: 6px;
-    /* VISIBILITY FIX: Ensure the active state also has the border */
-    border: 1px solid rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 /* --- Store Section --- */
 .store-section {
-    height: 20%;
+    /* This remains the same */
+    height: 12vh;
+    margin-top: 4vh;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     gap: 10px;
-    /* TWEAK: Add a top margin to separate from the carousel */
-    margin-top: 15px;
 }
 
 .store-card {
@@ -232,11 +231,13 @@ body {
         max-height: 800px;
         gap: 40px;
         align-items: stretch;
+        /* REVERT mobile container styles */
         padding: 0;
         margin: 0 auto;
     }
 
     .carousel-section {
+        /* REVERT mobile carousel styles */
         height: 100%;
         aspect-ratio: 9 / 16;
         justify-self: end;
@@ -247,11 +248,11 @@ body {
     }
 
     .store-section {
+        /* REVERT mobile store section styles */
         flex-direction: column;
         justify-content: space-between;
         height: 100%;
         gap: 20px;
-        /* TWEAK: Remove the mobile top margin on desktop */
         margin-top: 0;
     }
 
