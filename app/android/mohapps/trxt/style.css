@@ -138,14 +138,14 @@ body {
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s, width 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
 }
 
 .indicator.active {
     background-color: white;
     width: 28px;
     border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
 }
 
 /* --- Store Section --- */
@@ -295,3 +295,4 @@ body {
         display: block;
     }
 }
+
