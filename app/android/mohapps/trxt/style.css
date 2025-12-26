@@ -31,8 +31,11 @@ body {
     width: 100%;
     max-width: 600px;
     height: 100vh; /* Use full viewport height */
-    /* NEW: Add 4vh padding to top and bottom for margins */
-    padding: 4vh 10px;
+    /* NEW: Set specific top and bottom padding for margins */
+    padding-top: 1vh;
+    padding-bottom: 9vh;
+    padding-left: 10px;
+    padding-right: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -40,7 +43,7 @@ body {
 
 /* --- Carousel Section --- */
 .carousel-section {
-    /* NEW: Set a fixed height of 76% of the viewport */
+    /* This remains the same */
     height: 76vh;
     position: relative;
     background: var(--card-background);
@@ -149,7 +152,8 @@ body {
 .store-section {
     /* This remains the same */
     height: 12vh;
-    margin-top: 4vh;
+    /* NEW: Adjust the top margin */
+    margin-top: 2vh;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
