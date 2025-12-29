@@ -142,7 +142,7 @@ body {
 }
 
 .indicator.active {
-    background-color: white;
+    background-color: rgba(229, 20, 0, 1);
     width: 28px;
     border-radius: 6px;
     border: 1px solid rgba(0, 0, 0, 0.8);
@@ -295,4 +295,5 @@ body {
         display: block;
     }
 }
+
 
